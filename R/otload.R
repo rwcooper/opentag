@@ -21,7 +21,7 @@ endfile = 6    # specify name of file to end with
 # initialize empty vectors based on size of first file
 numfiles = endfile - startfile + 1
 filename = paste(path, startfile, ".DSG", sep="") 
-samples = file.size(filename) / 2 # this is overestimate
+samples = file.size(filename) / 2 # this is overestimate for a single file change from "/ 2" to "* 3" for large number of files
 INER <- rep(NA,samples * numfiles)  # Inertial vector
 PTMP <- rep(NA,samples * numfiles)   # Pressure/Temperature vector
 
@@ -48,7 +48,7 @@ for (filenum in startfile:endfile){
   print(filename)
   datafile = file(filename, "rb")
 
-  # DF_HEAD
+  # DF_HEAD This works for pulling data and time for each file but starts datetime at the date and time of the last file opened.
   version = readBin(datafile, integer(), n = 1, size = 4, endian = "little")
   userID = readBin(datafile, integer(), n = 1, size = 4, endian = "little")
   second = readBin(datafile, integer(), n = 1, size = 1, endian = "little")
